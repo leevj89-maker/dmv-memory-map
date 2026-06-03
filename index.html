@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our DMV Story · 2013–2026</title>
+  <meta name="description" content="13 years of memories across DC, Maryland & Virginia. Add yours to Jared & Victoria's farewell map." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f3;
+      --cream-dark: #f0ede4;
+      --ink: #1c1c1a;
+      --ink-mid: #4a4a46;
+      --ink-light: #8a8a84;
+      --ink-faint: #c4c2bb;
+      --border: rgba(28,28,26,0.12);
+      --border-strong: rgba(28,28,26,0.22);
+      --milestone: #2563a8;
+      --milestone-light: #ddeaf9;
+      --community: #0f7a57;
+      --community-light: #d5f0e6;
+      --faith: #b0395e;
+      --faith-light: #f8dfe8;
+      --work: #9a5e0a;
+      --work-light: #faebd4;
+      --accent: #b0395e;
+    }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .screen { display: none; min-height: 100vh; }
+    .screen.active { display: flex; flex-direction: column; }
+
+    /* ── WELCOME ── */
+    #screen-welcome {
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-map {
+      position: absolute; inset: 0;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .welcome-inner {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+    }
+
+    .welcome-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(38px, 8vw, 58px);
+      line-height: 1.08;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+
+    .welcome-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .welcome-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      max-width: 320px;
+      margin: 0 auto 2rem;
+    }
+
+    .year-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .year-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 0.5px solid var(--border-strong);
+      color: var(--ink-light);
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px 32px;
+      border-radius: 40px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--cream);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .primary-btn:hover { background: var(--ink-mid); border-color: var(--ink-mid); }
+
+    .view-memories-btn {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .view-memories-btn:hover { color: var(--ink-mid); }
+
+    /* ── FORM ── */
+    #screen-form {
+      padding: 0;
+    }
+
+    .form-header {
+      padding: 1.5rem 1.5rem 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .back-btn:hover { color: var(--ink-mid); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    .form-header-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--ink);
+    }
+
+    .form-body {
+      padding: 1.5rem;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    .form-intro {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .field { margin-bottom: 1.25rem; }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 11px 13px;
+      border: 0.5px solid var(--border-strong);
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      transition: border-color 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8a84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+
+    .field textarea {
+      resize: none;
+      height: 100px;
+      line-height: 1.6;
+    }
+
+    .char-hint {
+      font-size: 11px;
+      color: var(--ink-faint);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .submit-btn {
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--cream);
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .submit-btn:hover:not(:disabled) { background: var(--ink-mid); border-color: var(--ink-mid); }
+    .submit-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* ── CONFIRM ── */
+    #screen-confirm { padding: 0; }
+
+    .confirm-header {
+      padding: 1.5rem 1.5rem 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .confirm-body {
+      padding: 1.5rem;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    .pinned-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+    }
+
+    .memory-card {
+      border: 0.5px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 1.25rem;
+      background: white;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .memory-card .mc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .mc-year { font-size: 12px; color: var(--ink-light); }
+
+    .cat-pill {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .mc-place {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .mc-blurb {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .mc-name { font-size: 12px; color: var(--ink-faint); }
+
+    /* Map preview */
+    .map-wrap {
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #eeeae0;
+      margin-bottom: 1.25rem;
+      position: relative;
+      height: 220px;
+    }
+
+    .map-wrap svg { width: 100%; height: 100%; }
+
+    .pin-pulse {
+      animation: pulse 1.8s ease-in-out infinite;
+      transform-origin: center;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.6); }
+    }
+
+    .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+
+    .ghost-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 11px;
+      border-radius: 8px;
+      border: 0.5px solid var(--border-strong);
+      background: transparent;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: background 0.15s;
+      text-align: center;
+    }
+    .ghost-btn:hover { background: var(--cream-dark); }
+
+    /* ── FEED ── */
+    #screen-feed { padding: 0; }
+
+    .feed-header {
+      padding: 1.5rem 1.5rem 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .feed-body {
+      padding: 1.5rem;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    .feed-count {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink-light);
+      margin-bottom: 1.25rem;
+    }
+
+    .feed-item {
+      border-bottom: 0.5px solid var(--border);
+      padding: 1rem 0;
+    }
+    .feed-item:last-child { border-bottom: none; }
+
+    .fi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .fi-place {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .fi-meta { font-size: 12px; color: var(--ink-light); margin-bottom: 6px; }
+
+    .fi-blurb {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--ink-faint);
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .add-memory-footer {
+      padding: 1rem 1.5rem;
+      border-top: 0.5px solid var(--border);
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    @media (max-width: 420px) {
+      .field-row { grid-template-columns: 1fr; }
+      .action-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ WELCOME ══ -->
+<div id="screen-welcome" class="screen active" role="main">
+  <svg class="bg-map" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="400" y1="0" x2="400" y2="600" stroke="#1c1c1a" stroke-width="1"/>
+    <line x1="0" y1="300" x2="800" y2="300" stroke="#1c1c1a" stroke-width="1"/>
+    <path d="M100,0 L400,300 L100,600" fill="none" stroke="#1c1c1a" stroke-width="0.5"/>
+    <path d="M700,0 L400,300 L700,600" fill="none" stroke="#1c1c1a" stroke-width="0.5"/>
+    <path d="M0,180 Q200,160 400,200 Q600,240 800,190" fill="none" stroke="#1c1c1a" stroke-width="3"/>
+  </svg>
+
+  <div class="welcome-inner">
+    <p class="eyebrow">Washington DC · Maryland · Virginia</p>
+    <h1 class="welcome-title">You were part<br>of <em>this</em> story.</h1>
+    <p class="welcome-sub">13 years of community across the DMV. Drop a pin and tell us what this place meant to you.</p>
+    <div class="year-row">
+      <span class="year-pill">2013</span><span class="year-pill">2014</span><span class="year-pill">2015</span>
+      <span class="year-pill">2016</span><span class="year-pill">2017</span><span class="year-pill">2018</span>
+      <span class="year-pill">2019</span><span class="year-pill">2020</span><span class="year-pill">2021</span>
+      <span class="year-pill">2022</span><span class="year-pill">2023</span><span class="year-pill">2024</span>
+      <span class="year-pill">2025</span><span class="year-pill">2026</span>
+    </div>
+    <button class="primary-btn" onclick="goTo('screen-form')">Add my memory →</button>
+    <button class="view-memories-btn" onclick="goTo('screen-feed')" id="feed-link" style="display:none">See what others have shared</button>
+  </div>
+</div>
+
+<!-- ══ FORM ══ -->
+<div id="screen-form" class="screen" role="main" aria-label="Memory submission form">
+  <div class="form-header">
+    <button class="back-btn" onclick="goTo('screen-welcome')" aria-label="Back to welcome">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <span class="form-header-title">Your memory</span>
+  </div>
+  <div class="form-body">
+    <p class="form-intro">Think of a place in the DMV where your story crossed theirs. It doesn't have to be big — a dinner table counts.</p>
+
+    <div class="field">
+      <label for="f-name">Your name</label>
+      <input type="text" id="f-name" placeholder="e.g. Sarah & Mike" autocomplete="name" oninput="checkForm()" />
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="f-place">Place name</label>
+        <input type="text" id="f-place" placeholder="e.g. Eastern Market" oninput="checkForm()" />
+      </div>
+      <div class="field">
+        <label for="f-year">Year</label>
+        <input type="text" id="f-year" placeholder="e.g. 2017" oninput="checkForm()" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="f-cat">Category</label>
+      <select id="f-cat" onchange="checkForm()">
+        <option value="">Choose one...</option>
+        <option value="community">Community & gatherings</option>
+        <option value="milestone">Milestone</option>
+        <option value="faith">Faith & service</option>
+        <option value="work">Work & school</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="f-blurb">Your memory</label>
+      <textarea id="f-blurb" placeholder="What happened here? What do you remember about this place?" oninput="updateCount(); checkForm();"></textarea>
+      <div class="char-hint"><span id="char-out">0</span> / 240</div>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitMemory()" disabled>Pin my memory →</button>
+  </div>
+</div>
+
+<!-- ══ CONFIRM ══ -->
+<div id="screen-confirm" class="screen" role="main" aria-label="Memory confirmed">
+  <div class="confirm-header">
+    <button class="back-btn" onclick="goTo('screen-form')" aria-label="Edit memory">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Edit
+    </button>
+    <span class="form-header-title">Pinned ✓</span>
+  </div>
+  <div class="confirm-body">
+    <p class="pinned-label">Your memory is on the map</p>
+    <div class="memory-card" id="confirm-card"></div>
+    <div class="map-wrap">
+      <svg id="confirm-map" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DMV map with your memory pinned">
+        <rect width="520" height="220" fill="#eeeae0"/>
+        <path d="M0,130 Q80,112 160,135 Q240,158 310,138 Q380,118 440,142 Q480,155 520,138" fill="none" stroke="#b8d4e8" stroke-width="16" opacity="0.6"/>
+        <line x1="260" y1="0" x2="260" y2="220" stroke="#d8d4c8" stroke-width="0.5"/>
+        <line x1="0" y1="110" x2="520" y2="110" stroke="#d8d4c8" stroke-width="0.5"/>
+        <text x="60" y="42" font-size="10" fill="#b4b09e" font-family="'DM Sans', sans-serif">Maryland</text>
+        <text x="420" y="42" font-size="10" fill="#b4b09e" font-family="'DM Sans', sans-serif">Maryland</text>
+        <text x="60" y="200" font-size="10" fill="#b4b09e" font-family="'DM Sans', sans-serif">Virginia</text>
+        <text x="420" y="200" font-size="10" fill="#b4b09e" font-family="'DM Sans', sans-serif">Virginia</text>
+        <text x="260" y="98" font-size="10" fill="#b4b09e" font-family="'DM Sans', sans-serif" text-anchor="middle">DC</text>
+        <g id="bg-pins"></g>
+        <g id="new-pin"></g>
+      </svg>
+    </div>
+    <div class="action-row">
+      <button class="ghost-btn" onclick="addAnother()">Add another memory</button>
+      <button class="ghost-btn" onclick="goTo('screen-feed')">See all memories →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FEED ══ -->
+<div id="screen-feed" class="screen" role="main" aria-label="All guest memories">
+  <div class="feed-header">
+    <button class="back-btn" onclick="goTo('screen-welcome')" aria-label="Back to welcome">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <span class="form-header-title">All memories</span>
+  </div>
+  <div class="feed-body">
+    <p class="feed-count" id="feed-count-text"></p>
+    <div id="feed-list"></div>
+  </div>
+  <div class="add-memory-footer">
+    <button class="submit-btn" onclick="goTo('screen-form')" style="margin-top:0">Add your memory →</button>
+  </div>
+</div>
+
+<script>
+  const CATS = {
+    milestone: { label: 'Milestone', bg: '#ddeaf9', color: '#1a4f8a' },
+    community: { label: 'Community', bg: '#d5f0e6', color: '#0a5c3e' },
+    faith:     { label: 'Faith & service', bg: '#f8dfe8', color: '#8a2447' },
+    work:      { label: 'Work & school', bg: '#faebd4', color: '#7a4508' },
+  };
+
+  const PIN_SPOTS = [
+    {x:255,y:105},{x:230,y:125},{x:280,y:118},{x:195,y:148},
+    {x:315,y:138},{x:175,y:132},{x:340,y:112},{x:210,y:160},
+    {x:300,y:155},{x:155,y:155},{x:360,y:130},{x:240,y:90},
+  ];
+
+  let memories = [];
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 'screen-feed') renderFeed();
+    if (memories.length > 0) document.getElementById('feed-link').style.display = 'block';
+  }
+
+  function updateCount() {
+    const v = document.getElementById('f-blurb').value;
+    document.getElementById('char-out').textContent = v.length;
+  }
+
+  function checkForm() {
+    const ok = document.getElementById('f-name').value.trim()
+      && document.getElementById('f-place').value.trim()
+      && document.getElementById('f-blurb').value.trim()
+      && document.getElementById('f-cat').value;
+    document.getElementById('submit-btn').disabled = !ok;
+  }
+
+  function submitMemory() {
+    const name  = document.getElementById('f-name').value.trim();
+    const place = document.getElementById('f-place').value.trim();
+    const year  = document.getElementById('f-year').value.trim() || '2013–2026';
+    const cat   = document.getElementById('f-cat').value;
+    const blurb = document.getElementById('f-blurb').value.trim();
+    const idx   = memories.length % PIN_SPOTS.length;
+    const pos   = {
+      x: PIN_SPOTS[idx].x + (Math.random() - 0.5) * 30,
+      y: PIN_SPOTS[idx].y + (Math.random() - 0.5) * 20,
+    };
+    const entry = { id: Date.now(), name, place, year, cat, blurb, pos };
+    memories.push(entry);
+    renderConfirmCard(entry);
+    renderMapPins(entry);
+    goTo('screen-confirm');
+  }
+
+  function renderConfirmCard(m) {
+    const cat = CATS[m.cat];
+    document.getElementById('confirm-card').innerHTML = `
+      <div class="mc-top">
+        <span class="mc-year">${m.year}</span>
+        <span class="cat-pill" style="background:${cat.bg};color:${cat.color}">${cat.label}</span>
+      </div>
+      <div class="mc-place">${esc(m.place)}</div>
+      <div class="mc-blurb">${esc(m.blurb)}</div>
+      <div class="mc-name">— ${esc(m.name)}</div>
+    `;
+  }
+
+  function renderMapPins(highlight) {
+    const cat = CATS[highlight.cat];
+    const bgPins = document.getElementById('bg-pins');
+    bgPins.innerHTML = memories
+      .filter(m => m.id !== highlight.id)
+      .map(m => {
+        const c = CATS[m.cat];
+        return `<circle cx="${m.pos.x}" cy="${m.pos.y}" r="5" fill="${c.bg}" stroke="${c.color}" stroke-width="1.2"/>
+                <circle cx="${m.pos.x}" cy="${m.pos.y}" r="2" fill="${c.color}"/>`;
+      }).join('');
+
+    const px = highlight.pos.x;
+    const py = highlight.pos.y;
+    const label = highlight.place.length > 18 ? highlight.place.slice(0,16) + '…' : highlight.place;
+    document.getElementById('new-pin').innerHTML = `
+      <circle class="pin-pulse" cx="${px}" cy="${py}" r="14" fill="${cat.bg}" opacity="0.5"/>
+      <circle cx="${px}" cy="${py}" r="10" fill="${cat.bg}" stroke="${cat.color}" stroke-width="1.5"/>
+      <circle cx="${px}" cy="${py}" r="3.5" fill="${cat.color}"/>
+      <text x="${px}" y="${py - 15}" text-anchor="middle" font-size="9.5"
+        fill="${cat.color}" font-family="'DM Sans', sans-serif" font-weight="500">${esc(label)}</text>
+    `;
+  }
+
+  function addAnother() {
+    document.getElementById('f-place').value = '';
+    document.getElementById('f-year').value = '';
+    document.getElementById('f-blurb').value = '';
+    document.getElementById('f-cat').value = '';
+    document.getElementById('char-out').textContent = '0';
+    document.getElementById('submit-btn').disabled = true;
+    goTo('screen-form');
+  }
+
+  function renderFeed() {
+    const count = memories.length;
+    document.getElementById('feed-count-text').textContent =
+      count === 0 ? 'No memories yet — be the first.'
+      : count === 1 ? '1 memory shared so far.'
+      : `${count} memories shared so far.`;
+
+    document.getElementById('feed-list').innerHTML = count === 0
+      ? '<div class="empty-state">Your friends\' memories will appear here.</div>'
+      : [...memories].reverse().map(m => {
+          const cat = CATS[m.cat];
+          return `<div class="feed-item">
+            <div class="fi-top">
+              <div class="fi-place">${esc(m.place)}</div>
+              <span class="cat-pill" style="background:${cat.bg};color:${cat.color};font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;white-space:nowrap;">${cat.label}</span>
+            </div>
+            <div class="fi-meta">${esc(m.year)} · ${esc(m.name)}</div>
+            <div class="fi-blurb">${esc(m.blurb)}</div>
+          </div>`;
+        }).join('');
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
